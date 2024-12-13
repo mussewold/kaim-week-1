@@ -44,15 +44,7 @@ def plot_top_publishers(publisher_counts, top_n=10):
 
 
 def plot_sentiment_by_publisher(df, publisher_column, sentiment_column, top_n=10):
-    """
-    Plots the distribution of sentiment for the top publishers.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing the data.
-        publisher_column (str): The name of the column containing publishers.
-        sentiment_column (str): The name of the column containing sentiment labels (e.g., 'positive', 'negative', 'neutral').
-        top_n (int): The number of top publishers to analyze. Default is 10.
-    """
+    
     # Get the top publishers
     top_publishers = df[publisher_column].value_counts().head(top_n).index
 
