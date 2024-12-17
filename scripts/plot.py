@@ -119,3 +119,34 @@ def plot_event_counts(event_counts,
     plt.ylabel('Number of Mentions')
     plt.tight_layout()
     plt.show()
+
+
+def plot_price_and_ma(data, ticker, indicators):
+    """Plot price and moving averages."""
+    plt.figure(figsize=(14, 7))
+    plt.plot(data.index, data[f'{ticker}_Close'], label=f'{ticker} Close Price')
+    plt.plot(data.index, indicators['SMA50'], label=f'{ticker} 50-Day SMA')
+    plt.plot(data.index, indicators['SMA200'], label=f'{ticker} 200-Day SMA')
+    plt.title(f'{ticker} Close Price and Moving Averages')
+    plt.legend()
+    plt.show()
+
+def plot_rsi(data, ticker, indicators):
+    """Plot RSI indicator."""
+    plt.figure(figsize=(14, 7))
+    plt.plot(data.index, indicators['RSI'], label=f'{ticker} RSI')
+    plt.axhline(70, color='r', linestyle='--')
+    plt.axhline(30, color='r', linestyle='--')
+    plt.title(f'{ticker} Relative Strength Index (RSI)')
+    plt.legend()
+    plt.show()
+
+def plot_macd(data, ticker, indicators):
+    """Plot MACD indicator."""
+    plt.figure(figsize=(14, 7))
+    plt.plot(data.index, indicators['MACD'], label=f'{ticker} MACD')
+    plt.plot(data.index, indicators['MACD_Signal'], label=f'{ticker} MACD Signal')
+    plt.bar(data.index, indicators['MACD_Hist'], label=f'{ticker} MACD Hist', alpha=0.3)
+    plt.title(f'{ticker} MACD')
+    plt.legend()
+    plt.show()
