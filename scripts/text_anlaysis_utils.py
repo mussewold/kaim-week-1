@@ -121,3 +121,21 @@ def find_specific_events(headlines):
                 counts[event] += 1
     
     return counts
+
+
+def calculate_daily_sentiment(df, sentiment_column='sentiment', date_column='date'):
+    # Define sentiment mapping
+    sentiment_mapping = {
+        'positive': 1,
+        'neutral': 0,
+        'negative': -1
+    }
+    
+    # Convert sentiment to numerical scores and aggregate by date
+    daily_sentiment = (df
+                      .assign(sentiment_score=df[sentiment_column].map(sentiment_mapping))
+                      .groupby(date_column)['sentiment_score']
+                      .mean()
+                      .reset_index())
+    
+    return daily_sentiment

@@ -121,6 +121,58 @@ def plot_event_counts(event_counts,
     plt.show()
 
 
+def plot_stock_returns(df, stock_columns, figsize=(12, 6)):
+    plt.figure(figsize=figsize)
+
+    # Plot returns for each stock
+    for column in stock_columns:
+        # Extract stock symbol from column name (e.g., 'AAPL_Return' -> 'AAPL')
+        stock_symbol = column.split('_')[0]
+        plt.plot(df['Date'], df[column], label=stock_symbol, alpha=0.7)
+
+    # Customize the plot
+    plt.title('Daily Stock Returns Comparison', fontsize=12)
+    plt.xlabel('Date')
+    plt.ylabel('Daily Returns (%)')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_correlation_analysis(correlations, title='Correlation Analysis'):
+    
+    stocks = list(correlations.keys())
+    correlation_values = [stats['correlation'] for stats in correlations.values()]
+    p_values = [stats['p_value'] for stats in correlations.values()]
+
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+
+    # Correlation bars
+    color = 'tab:blue'
+    ax1.set_xlabel('Stocks')
+    ax1.set_ylabel('Correlation', color=color)
+    ax1.bar(stocks, correlation_values, color=color, alpha=0.6, label='Correlation')
+    ax1.tick_params(axis='y', labelcolor=color)
+    ax1.legend(loc='upper left')
+
+    # P-value line
+    ax2 = ax1.twinx()
+    color = 'tab:red'
+    ax2.set_ylabel('P-value', color=color)
+    ax2.plot(stocks, p_values, color=color, marker='o', 
+             linestyle='dashed', linewidth=2, markersize=5, label='P-value')
+    ax2.tick_params(axis='y', labelcolor=color)
+    ax2.legend(loc='upper right')
+
+    fig.tight_layout()
+    plt.title(title)
+    plt.xticks(rotation=45)
+    return fig
+
+
+
 def plot_price_and_ma(data, ticker, indicators):
     """Plot price and moving averages."""
     plt.figure(figsize=(14, 7))
