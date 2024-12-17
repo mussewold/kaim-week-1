@@ -119,3 +119,23 @@ def plot_event_counts(event_counts,
     plt.ylabel('Number of Mentions')
     plt.tight_layout()
     plt.show()
+
+
+def plot_stock_returns(df, stock_columns, figsize=(12, 6)):
+    plt.figure(figsize=figsize)
+
+    # Plot returns for each stock
+    for column in stock_columns:
+        # Extract stock symbol from column name (e.g., 'AAPL_Return' -> 'AAPL')
+        stock_symbol = column.split('_')[0]
+        plt.plot(df['Date'], df[column], label=stock_symbol, alpha=0.7)
+
+    # Customize the plot
+    plt.title('Daily Stock Returns Comparison', fontsize=12)
+    plt.xlabel('Date')
+    plt.ylabel('Daily Returns (%)')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
