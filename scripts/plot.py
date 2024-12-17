@@ -44,15 +44,7 @@ def plot_top_publishers(publisher_counts, top_n=10):
 
 
 def plot_sentiment_by_publisher(df, publisher_column, sentiment_column, top_n=10):
-    """
-    Plots the distribution of sentiment for the top publishers.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing the data.
-        publisher_column (str): The name of the column containing publishers.
-        sentiment_column (str): The name of the column containing sentiment labels (e.g., 'positive', 'negative', 'neutral').
-        top_n (int): The number of top publishers to analyze. Default is 10.
-    """
+    
     # Get the top publishers
     top_publishers = df[publisher_column].value_counts().head(top_n).index
 
@@ -82,5 +74,48 @@ def plot_sentiment_by_publisher(df, publisher_column, sentiment_column, top_n=10
     plt.ylabel("Percentage")
     plt.xticks(rotation=45)
     plt.legend(title="Sentiment")
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_headline_length_distribution(headline_lengths, figsize=(12, 6)):
+    """
+    Creates a histogram of headline lengths.
+
+    Args:
+        headline_lengths (pd.Series): Series containing the length of headlines
+        figsize (tuple): Figure size (width, height)
+    """
+    plt.figure(figsize=figsize)
+    plt.hist(headline_lengths, bins=50, edgecolor='black')
+    plt.title('Distribution of Headline Lengths')
+    plt.xlabel('Number of Characters')
+    plt.ylabel('Frequency')
+    plt.grid(True, alpha=0.3)
+    plt.show()
+
+def plot_keyword_frequencies(keywords, 
+                           title: str = "Most Common Keywords",
+                           figsize = (12, 6)) -> None:
+    words, counts = zip(*keywords)
+    plt.figure(figsize=figsize)
+    plt.bar(words, counts)
+    plt.title(title)
+    plt.xticks(rotation=45, ha='right')
+    plt.xlabel('Keywords')
+    plt.ylabel('Frequency')
+    plt.tight_layout()
+    plt.show()
+
+def plot_event_counts(event_counts, 
+                     figsize = (10, 6)) -> None:
+    events = [event.replace('_', ' ').title() for event in event_counts.keys()]
+    counts = list(event_counts.values())
+    
+    plt.figure(figsize=figsize)
+    plt.bar(events, counts)
+    plt.title('Frequency of Specific Events in Headlines')
+    plt.xticks(rotation=45, ha='right')
+    plt.ylabel('Number of Mentions')
     plt.tight_layout()
     plt.show()
